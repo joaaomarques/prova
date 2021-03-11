@@ -1,0 +1,37 @@
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="layout">
+<head>
+<title>Cliente</title>
+</head>
+
+<body>
+<body>
+	<h1 layout:fragment="header" class="container">Cliente</h1>
+	<div layout:fragment="content" class="well container">
+		<div class="alert	alert-success" th:if="${globalMessage}"
+			th:text="${globalMessage}">cliente gravado com sucesso</div>
+
+		<table class="table	table-striped">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Nome</th>
+					<th>Endereço</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td id="id" th:text="${cliente.id}">123</td>
+					<td id="nome" th:text="${cliente.nome}">Nome</td>
+					<td id="endereco" th:text="${cliente.endereco.cep + ', ' + endereco.rua + ', ' + endereco.bairro}">Endereço</td>
+				</tr>
+			</tbody>
+		</table>
+		<div class="pull-left">
+			<a class="btn btn-primary" th:href="@{/clientes/}">Voltar</a>
+			
+		</div>
+	</div>
+</body>
+</html>

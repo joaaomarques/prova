@@ -1,0 +1,43 @@
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="layout">
+<head>
+<title>Cliente</title>
+</head>
+<body>
+	<h1 layout:fragment="header" class="container">Cadastro de cliente</h1>
+
+	<div layout:fragment="content" class="input-form container">
+		<div class="well">
+			<form id="clienteForm" th:action="@{/clientes/(form)}"
+				th:object="${clienteDto}" action="#" method="post"
+				class="form-horizontal">
+					<div class="mb-3">
+						<label class="form-label">Nome</label> 
+							<input type="text" th:field="*{nome}" class="form-control">	
+					</div>
+					<div class="mb-3">
+						<label class="form-label">Idade</label> 
+							<input type="number" th:field="*{idade}" class="form-control">	
+					</div>
+					<legend>Endereço</legend>
+					<div class="mb-3">
+						<label class="form-label">CEP</label> 
+							<input type="text" th:field="*{cep}" class="form-control">
+					</div>
+					<div class="mb-3">
+						<label class="form-label">Rua</label> 
+							<input type="text" th:field="*{rua}" class="form-control">	
+					</div>
+					<div class="mb-3">
+						<label class="form-label">Bairro</label> 
+							<input type="text" th:field="*{bairro}" class="form-control">	
+					</div>
+					
+					
+					<button type="submit" class="btn btn-primary">Enviar</button>
+				</form>
+			
+		</div>
+	</div>
+</body>
