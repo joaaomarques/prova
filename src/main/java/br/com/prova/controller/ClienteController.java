@@ -45,7 +45,6 @@ public class ClienteController {
 	public ModelAndView create(ClienteDto clienteDto) {
 		this.clienteRepository.save(clienteDto.toCliente());
 		Iterable<Cliente> clientes = this.clienteRepository.findAll();
-		
 		ModelAndView mv = new ModelAndView("clientes/list", "clientes", clientes);
 		mv.addObject("globalMessage", clienteDto.getId() != null ? "Cliente atualizado com sucesso" : "Cliente cadastrado com sucesso");
 		return mv;
