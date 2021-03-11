@@ -1,7 +1,5 @@
 package br.com.prova.model;
 
-import java.util.List;
-
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,6 +8,8 @@ import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import br.com.prova.dto.ClienteDto;
 
 @Entity
 public class Cliente {
@@ -27,6 +27,11 @@ public class Cliente {
 	private Endereco endereco;
 	
 	
+	
+	public ClienteDto toClienteDto() {
+		 return new ClienteDto(id, nome, idade, endereco.getCep(), endereco.getRua(), endereco.getBairro());
+		
+	}
 
 	public Cliente(Long id, String nome, Integer idade, Endereco endereco) {
 		this.id = id;

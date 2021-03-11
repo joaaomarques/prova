@@ -10,13 +10,14 @@
 	<h1 layout:fragment="header" class="container">Cliente</h1>
 	<div layout:fragment="content" class="well container">
 		<div class="alert	alert-success" th:if="${globalMessage}"
-			th:text="${globalMessage}">cliente gravado com sucesso</div>
+			th:text="${globalMessage}">Cliente gravado com sucesso</div>
 
 		<table class="table	table-striped">
 			<thead>
 				<tr>
 					<th>ID</th>
 					<th>Nome</th>
+					<th>Idade</th>
 					<th>Endereço</th>
 				</tr>
 			</thead>
@@ -24,14 +25,17 @@
 				<tr>
 					<td id="id" th:text="${cliente.id}">123</td>
 					<td id="nome" th:text="${cliente.nome}">Nome</td>
-					<td id="endereco" th:text="${cliente.endereco.cep + ', ' + endereco.rua + ', ' + endereco.bairro}">Endereço</td>
+					<td id="idade" th:text="${cliente.idade}">Idade</td>
+					<td id="endereco"
+						th:text="${cliente.endereco.cep + ', ' + endereco.rua + ', ' + endereco.bairro}">Endereço</td>
 				</tr>
 			</tbody>
 		</table>
 		<div class="pull-left">
 			<a class="btn btn-primary" th:href="@{/clientes/}">Voltar</a>
-			
+			<a class="btn btn-warning" th:href="@{'/clientes/alterar/' + ${cliente.id}}">Alterar</a>
+			<a class="btn btn-danger" th:href="@{'/clientes/remover/' + ${cliente.id}}">Remover</a>
 		</div>
-	</div>
+</div>		
 </body>
 </html>

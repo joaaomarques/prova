@@ -12,6 +12,7 @@
 			<form id="clienteForm" th:action="@{/clientes/(form)}"
 				th:object="${clienteDto}" action="#" method="post"
 				class="form-horizontal">
+				<input th:field="*{id}" type="hidden" />
 					<div class="mb-3">
 						<label class="form-label">Nome</label> 
 							<input type="text" th:field="*{nome}" class="form-control">	

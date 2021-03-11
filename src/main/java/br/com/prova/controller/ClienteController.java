@@ -2,11 +2,8 @@ package br.com.prova.controller;
 
 import java.util.List;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,7 +25,7 @@ public class ClienteController {
 	
 	@GetMapping
 	public ModelAndView listar() {
-		List<Cliente> clientes =this.clienteRepository.findAll();
+		List<Cliente> clientes = this.clienteRepository.findAll();
 		return new ModelAndView("/clientes/list","clientes",clientes);
 	}
 	@GetMapping("{id}")
@@ -38,7 +35,7 @@ public class ClienteController {
 	    modelAndView.addObject("endereco", cliente.getEndereco());
 		return modelAndView;
 
-	}
+	}	
 	@GetMapping("/novo")
 	public String createForm(@ModelAttribute ClienteDto clienteDto) {
 		return "clientes/form";
@@ -46,10 +43,33 @@ public class ClienteController {
 	
 	@PostMapping(params="form")
 	public ModelAndView create(ClienteDto clienteDto) {
-		Cliente cliente = clienteDto.toCliente();
-		cliente = this.clienteRepository.save(cliente);
-		return new ModelAndView("redirect:/" + "clientes");
+		this.clienteRepository.save(clienteDto.toCliente());
+		Iterable<Cliente> clientes = this.clienteRepository.findAll();
+		
+		ModelAndView mv = new ModelAndView("clientes/list", "clientes", clientes);
+		mv.addObject("globalMessage", clienteDto.getId() != null ? "Cliente atualizado com sucesso" : "Cliente cadastrado com sucesso");
+		return mv;
 	}
+	
+	@GetMapping(value="/alterar/{id}")
+	public	ModelAndView alterarForm(@PathVariable("id") Long clienteId)	{
+		Cliente cliente = this.clienteRepository.findById(clienteId).orElse(new Cliente());
+		ModelAndView mv = new ModelAndView("clientes/form","clienteDto", cliente.toClienteDto());
+		mv.addObject("globalMessage", "Cliente atualizado com sucesso");
+		return mv;
+	
+	}
+	
+	@GetMapping(value = "remover/{id}")
+	public ModelAndView remover(@PathVariable("id") Long id, RedirectAttributes redirect) {
+		this.clienteRepository.deleteById(id);
+		Iterable<Cliente> clientes = this.clienteRepository.findAll();
+		
+		ModelAndView mv = new ModelAndView("clientes/list", "clientes", clientes);
+		mv.addObject("globalMessage", "Cliente removido com sucesso");
+		return mv;
+	}
+	
 
 	
 }
