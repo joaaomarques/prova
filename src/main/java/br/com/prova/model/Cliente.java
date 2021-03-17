@@ -40,7 +40,9 @@ public class Cliente {
 		this.endereco = endereco;
 	}
 	
-	public Cliente() {}
+	public Cliente() {
+		endereco = new Endereco();
+	}
 
 	public Long getId() {
 		return id;

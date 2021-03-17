@@ -29,8 +29,9 @@ public class ClienteController {
 		return new ModelAndView("/clientes/list","clientes",clientes);
 	}
 	@GetMapping("{id}")
-	public ModelAndView view(@PathVariable("id") Cliente cliente) {
+	public ModelAndView view(@PathVariable("id") Long clienteId) {
 		ModelAndView modelAndView = new ModelAndView("clientes/view");
+		Cliente cliente = this.clienteRepository.findOneById(clienteId).orElse(new Cliente());
 	    modelAndView.addObject("cliente", cliente);
 	    modelAndView.addObject("endereco", cliente.getEndereco());
 		return modelAndView;
@@ -44,7 +45,7 @@ public class ClienteController {
 	@PostMapping(params="form")
 	public ModelAndView create(ClienteDto clienteDto) {
 		this.clienteRepository.save(clienteDto.toCliente());
-		Iterable<Cliente> clientes = this.clienteRepository.findAll();
+		List<Cliente> clientes = this.clienteRepository.findAll();
 		ModelAndView mv = new ModelAndView("clientes/list", "clientes", clientes);
 		mv.addObject("globalMessage", clienteDto.getId() != null ? "Cliente atualizado com sucesso" : "Cliente cadastrado com sucesso");
 		return mv;
@@ -52,7 +53,7 @@ public class ClienteController {
 	
 	@GetMapping(value="/alterar/{id}")
 	public	ModelAndView alterarForm(@PathVariable("id") Long clienteId)	{
-		Cliente cliente = this.clienteRepository.findById(clienteId).orElse(new Cliente());
+		Cliente cliente = this.clienteRepository.findOneById(clienteId).orElse(new Cliente());
 		ModelAndView mv = new ModelAndView("clientes/form","clienteDto", cliente.toClienteDto());
 		mv.addObject("globalMessage", "Cliente atualizado com sucesso");
 		return mv;
